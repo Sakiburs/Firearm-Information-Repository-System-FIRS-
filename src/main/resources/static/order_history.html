@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FIRS | Order</title>
+    <link rel="icon" href="./resources/icons/icons_knife.png" type="image/x-icon">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Rajdhani:wght@300;400;500;600;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body { background: var(--bg0); }
+        .history-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 100px 32px 48px;
+        }
+        .page-title {
+            font-family: 'Bebas Neue';
+            font-size: 48px;
+            letter-spacing: 2px;
+            margin-bottom: 8px;
+        }
+        .page-title span { color: var(--red); }
+        .page-sub {
+            font-family: 'Rajdhani';
+            font-size: 14px;
+            color: var(--ash2);
+            margin-bottom: 32px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+        .filter-bar {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+        .filter-bar select, .filter-bar input {
+            padding: 8px 14px;
+            background: var(--bg2);
+            border: 1px solid var(--border);
+            color: var(--white);
+            font-family: 'DM Sans';
+            font-size: 13px;
+        }
+        .orders-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: var(--bg1);
+            border: 1px solid var(--border);
+        }
+        .orders-table th {
+            text-align: left;
+            padding: 16px 20px;
+            font-family: 'Rajdhani';
+            font-size: 11px;
+            letter-spacing: 2px;
+            color: var(--ash2);
+            border-bottom: 1px solid var(--border);
+            text-transform: uppercase;
+        }
+        .orders-table td {
+            padding: 18px 20px;
+            border-bottom: 1px solid var(--border);
+            font-size: 14px;
+            vertical-align: middle;
+        }
+        .orders-table tr:last-child td { border-bottom: none; }
+        .orders-table tr:hover td { background: rgba(255,255,255,0.02); }
+        .order-status {
+            display: inline-block;
+            padding: 4px 12px;
+            font-family: 'Rajdhani';
+            font-size: 10px;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+        }
+        .status-delivered { background: rgba(34,160,90,0.1); border: 1px solid rgba(34,160,90,0.3); color: var(--green-b); }
+        .status-processing { background: rgba(200,160,32,0.1); border: 1px solid rgba(200,160,32,0.3); color: var(--gold-b); }
+        .status-shipped { background: rgba(42,106,207,0.1); border: 1px solid rgba(42,106,207,0.3); color: var(--blue-b); }
+        .status-pending { background: rgba(200,33,58,0.1); border: 1px solid var(--border-r); color: var(--red-b); }
+        .order-items {
+            font-size: 13px;
+            color: var(--ash);
+            line-height: 1.5;
+        }
+        .order-total {
+            font-family: 'Bebas Neue';
+            font-size: 20px;
+            color: var(--white);
+        }
+        .view-details {
+            color: var(--red);
+            text-decoration: none;
+            font-family: 'Rajdhani';
+            font-size: 12px;
+            letter-spacing: 1px;
+        }
+        .no-orders {
+            text-align: center;
+            padding: 60px;
+            color: var(--ash2);
+            font-family: 'Rajdhani';
+            font-size: 16px;
+        }
+        .back-link {
+            display: inline-block;
+            margin-bottom: 24px;
+            color: var(--ash);
+            text-decoration: none;
+            font-family: 'Rajdhani';
+        }
+    </style>
+</head>
+<body>
+<nav>
+    <a href="index.html" class="logo">F<span>I</span>RS</a>
+    <ul>
+        <li><a href="index.html#categories">Arsenal</a></li>
+        <li><a href="index.html#handguns">Handguns</a></li>
+        <li><a href="index.html#revolvers">Revolvers</a></li>
+        <li><a href="index.html#restricted">Rifles & Snipers</a></li>
+    </ul>
+    <div class="nav-cta"></div>
+</nav>
+
+<div class="history-container">
+    <a href="#" id="backLink" class="back-link">← Back to Dashboard</a>
+    <h1 class="page-title">ORDER <span>HISTORY</span></h1>
+    <div class="page-sub">
+        <span id="orderCount">Loading orders...</span>
+        <div class="filter-bar">
+            <input type="text" id="searchInput" placeholder="Search by ID or item..." oninput="filterOrders()">
+            <select id="statusFilter" onchange="filterOrders()">
+                <option value="all">All Statuses</option>
+                <option value="Delivered">Delivered</option>
+                <option value="Shipped">Shipped</option>
+                <option value="Processing">Processing</option>
+                <option value="Pending">Pending</option>
+            </select>
+            <select id="sortSelect" onchange="filterOrders()">
+                <option value="date-desc">Newest First</option>
+                <option value="date-asc">Oldest First</option>
+                <option value="total-desc">Total: High to Low</option>
+                <option value="total-asc">Total: Low to High</option>
+            </select>
+        </div>
+    </div>
+
+    <table class="orders-table" id="ordersTable">
+        <thead>
+        <tr>
+            <th>Order ID</th>
+            <th>Date</th>
+            <th>Items</th>
+            <th>Total</th>
+            <th>Status</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody id="ordersBody">
+        <tr><td colspan="6" class="no-orders">Loading your order history...</td></tr>
+        </tbody>
+    </table>
+</div>
+
+<script src="script.js"></script>
+<script>
+    const currentUser = getCurrentUser();
+    if (!currentUser) {
+        window.location.href = 'auth_page.html';
+    }
+
+    // set back link based on role
+    const backLink = document.getElementById('backLink');
+    if (currentUser.role === 'customer') backLink.href = 'customer_view.html';
+    else if (currentUser.role === 'govt') backLink.href = 'govt_view.html';
+    else if (currentUser.role === 'dealer') backLink.href = 'dealer_view.html';
+    else if (currentUser.role === 'admin') backLink.href = 'admin_dashboard.html';
+
+    // get orders for this user only
+    function getUserOrders() {
+        const allOrders = JSON.parse(localStorage.getItem('firs_orders')) || [];
+        return allOrders.filter(order => order.userEmail === currentUser.email);
+    }
+
+    let userOrders = getUserOrders();
+    let filteredOrders = [...userOrders];
+
+    function filterOrders() {
+        const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+        const statusFilter = document.getElementById('statusFilter').value;
+        const sort = document.getElementById('sortSelect').value;
+
+        filteredOrders = userOrders.filter(order => {
+            const matchesSearch = order.orderId.toLowerCase().includes(searchTerm) ||
+                order.items.some(item => item.name.toLowerCase().includes(searchTerm));
+            const matchesStatus = statusFilter === 'all' || order.status === statusFilter;
+            return matchesSearch && matchesStatus;
+        });
+
+        // sort based on selection
+        switch (sort) {
+            case 'date-desc':
+                filteredOrders.sort((a, b) => new Date(b.date) - new Date(a.date));
+                break;
+            case 'date-asc':
+                filteredOrders.sort((a, b) => new Date(a.date) - new Date(b.date));
+                break;
+            case 'total-desc':
+                filteredOrders.sort((a, b) => b.total - a.total);
+                break;
+            case 'total-asc':
+                filteredOrders.sort((a, b) => a.total - b.total);
+                break;
+        }
+
+        renderOrders();
+    }
+
+    function renderOrders() {
+        const tbody = document.getElementById('ordersBody');
+        document.getElementById('orderCount').textContent = `${filteredOrders.length} order${filteredOrders.length !== 1 ? 's' : ''}`;
+
+        if (filteredOrders.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="6" class="no-orders">No orders found. Complete a purchase to see your order history.</td></tr>';
+            return;
+        }
+
+        tbody.innerHTML = filteredOrders.map(order => {
+            const date = new Date(order.date).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+            const itemsList = order.items.map(i => `${i.qty}× ${i.name}`).join('<br>');
+            const statusClass =
+                order.status === 'Delivered' ? 'status-delivered' :
+                    order.status === 'Shipped' ? 'status-shipped' :
+                        order.status === 'Processing' ? 'status-processing' : 'status-pending';
+
+            return `<tr>
+          <td><strong>${order.orderId}</strong></td>
+          <td>${date}</td>
+          <td><div class="order-items">${itemsList}</div></td>
+          <td><div class="order-total">$${order.total}</div></td>
+          <td><span class="order-status ${statusClass}">${order.status}</span></td>
+          <td><a href="#" class="view-details" onclick="alert('Order ${order.orderId}\\nTotal: $${order.total}\\nStatus: ${order.status}\\nFFL Transfer: $${order.fflFee}'); return false;">View →</a></td>
+        </tr>`;
+        }).join('');
+    }
+
+    // initial load
+    window.addEventListener('DOMContentLoaded', () => {
+        if (typeof updateNavigation === 'function') updateNavigation();
+        renderOrders();
+    });
+</script>
+</body>
+</html>
