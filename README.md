@@ -171,19 +171,7 @@ const API_BASE = "http://localhost:8080/api";
 
 ## 🖼️ Screenshots
 
-<details>
-<summary>Click to expand</summary>
-
-### Homepage
-![Homepage](screenshots/homepage.png)
-
-### Product Catalog
-![Product Catalog](screenshots/catalog.png)
-
-### Dealer Dashboard
-![Dealer Dashboard](screenshots/dealer.png)
-
-</details>
+Screenshots are not currently included in this repository.
 ## 🐞 Troubleshooting
 
 | Issue                          | Solution |
