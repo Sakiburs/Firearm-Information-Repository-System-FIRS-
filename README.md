@@ -64,7 +64,7 @@ It showcases secure authentication, tiered catalog access, inventory management,
 | Layer       | Technologies                                                                 |
 |-------------|-------------------------------------------------------------------------------|
 | **Backend** | Java 17, Spring Boot 3.3.2, Spring Data JPA (Hibernate), Maven, Lombok        |
-| **Frontend**| HTML5, CSS3, Vanilla JavaScript, Fetch API, Google Fonts                      |
+| **Frontend**| HTML5, CSS3, Vanilla JavaScript, localStorage, Google Fonts                   |
 | **Database**| MySQL 8.0+ (with Hibernate DDL auto‑generation)                               |
 | **Tooling** | XAMPP / MySQL Workbench, VS Code, Postman                                     |
 
