@@ -88,7 +88,7 @@ firs-project/
 │   │       ├── static/        # Frontend assets (HTML, CSS, JS, images)
 │   │       └── application.properties
 ├── database/
-│   └── firs_db.sql            # SQL schema + initial data
+│   └── firs_db.sql            # SQL schema
 ├── pom.xml
 └── README.md
 ```
