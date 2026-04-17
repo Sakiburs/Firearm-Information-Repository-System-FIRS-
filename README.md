@@ -142,10 +142,8 @@ src/main/resources/static/
 ```
 You can use any local HTTP server (e.g., VS Code Live Server).
 
-Make sure your API base URL is correctly set in `script.js`:
-```js
-const API_BASE = "http://localhost:8080/api";
-```
+The current static frontend does **not** require an `API_BASE` setting in `script.js`.
+If you add frontend-to-backend API calls in the future, document the integration points and any base-URL configuration in the same file that performs those requests.
 
 ## 🔐 Demo Credentials
 
