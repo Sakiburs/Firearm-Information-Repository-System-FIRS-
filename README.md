@@ -115,7 +115,7 @@ cd firs-project
 2️⃣ Configure Database
 Edit src/main/resources/application.properties with your MySQL credentials:
 ```bash
-spring.datasource.url=jdbc:mysql://localhost:3306/firs_db?createDatabaseIfNotExist=true&useSSL=false&serverTimezone=UTC
+spring.datasource.url=jdbc:mysql://localhost:3306/firs_db?useSSL=false&serverTimezone=UTC
 spring.datasource.username=root
 spring.datasource.password=your_password
 ```
