@@ -158,11 +158,9 @@ If you add frontend-to-backend API calls in the future, document the integration
 
 | Method | Endpoint        | Description              | Request Body Example |
 |--------|----------------|--------------------------|----------------------|
-| POST   | /api/register  | Register a new user      | `{ "name": "...", "email": "...", "password": "...", "role": "..." }` |
 | POST   | /api/login     | Authenticate user        | `{ "email": "...", "password": "..." }` |
 | GET    | /api/products  | Retrieve all products    | – |
-| GET    | /api/orders    | Retrieve user orders     | – |
-| POST   | /api/orders    | Create a new order       | `{ "userEmail": "...", "items": [ { "name": "...", "qty": ... } ] }` |
+| POST   | /api/orders    | Create a new order       | `{ "userId": 1, "totalAmount": 1999.99, "status": "PENDING" }` |
 
 > **Note:** All endpoints are CORS-enabled for local development.
 
